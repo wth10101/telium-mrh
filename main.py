@@ -53,17 +53,22 @@ def output_moves():
     print()
     
 def get_action():
-    global module, last_module, possible_moves
+    global module, last_module, possible_moves, power, alive
     valid_action = False
     while valid_action == False:
-        print("What do you want to do next ? (MOVE, SCANNER)")
+        print("What do you want to do next ? (MOVE m, SCANNER)")
         action = input(">")
-        if action == "MOVE":
-            move = int(input("Enter the module to move to: "))
+        action, move = action.split(" ")
+        move = int(move.strip())
+        print(action, move)
+        if action.upper() == "MOVE" or "M":
             if move in possible_moves:
                 valid_action = True
                 last_module = module
                 module = move
+                power = power - 1
+                if power < 1:
+                    alive = False
             else:
                 print("The module must be connected to the current module.")
     
